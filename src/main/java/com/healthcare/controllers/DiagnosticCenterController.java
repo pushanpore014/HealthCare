@@ -3,6 +3,8 @@ package com.healthcare.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.healthcare.exception.centerNotFoundException;
+import com.healthcare.repository.DiagnosticCenterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,6 +27,7 @@ public class DiagnosticCenterController {
 
 	@Autowired private DiagnosticCenterService dservice;
 	@Autowired private DiagnosticTestService tservice;
+	@Autowired DiagnosticCenterRepository diagnosticCenterRepository;
 	
 	@PostMapping("")
 	public ResponseEntity<?> addCenter(@RequestBody DiagnosticCenter center) {
@@ -53,18 +56,27 @@ public class DiagnosticCenterController {
 		return ResponseEntity.ok(map);
 	}
 	
-	@GetMapping
+	@GetMapping("")
 	public ResponseEntity<?> listAll(){
 		return ResponseEntity.ok(dservice.getAllDiagnosticCenters());
 	}
 	
 	@GetMapping("{id}")
-	public ResponseEntity<?> findById(@PathVariable("id") int centerId){
-		return ResponseEntity.ok(dservice.getDiagnosticCenter(centerId));
+	public DiagnosticCenter findById(@PathVariable("id") int centerId){
+		return this.diagnosticCenterRepository.findById(centerId).orElseThrow(() ->	new centerNotFoundException("Center not found "));
+
 	}
 	
 	@DeleteMapping("{id}")
-	public ResponseEntity<?> deleteCenter(@PathVariable("id") int centerId){
+	public ResponseEntity<Map<String, String>> deleteCenter(@PathVariable("id") int centerId){
+//
+//		if(!this.diagnosticCenterRepository.existsById(centerId))
+//		{
+//			throw new centerNotFoundException("Center does not exist");
+//		}
+//		this.diagnosticCenterRepository.deleteById(centerId);
+
+
 		DiagnosticCenter diagnosticCenter=dservice.getDiagnosticCenter(centerId);
 		dservice.removeDiagnosticCenter(diagnosticCenter);
 		Map<String,String> map=new HashMap<>();
