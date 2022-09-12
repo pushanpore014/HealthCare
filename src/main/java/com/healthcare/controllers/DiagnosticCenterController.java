@@ -69,13 +69,6 @@ public class DiagnosticCenterController {
 	
 	@DeleteMapping("{id}")
 	public ResponseEntity<Map<String, String>> deleteCenter(@PathVariable("id") int centerId){
-//
-//		if(!this.diagnosticCenterRepository.existsById(centerId))
-//		{
-//			throw new centerNotFoundException("Center does not exist");
-//		}
-//		this.diagnosticCenterRepository.deleteById(centerId);
-
 
 		DiagnosticCenter diagnosticCenter=dservice.getDiagnosticCenter(centerId);
 		dservice.removeDiagnosticCenter(diagnosticCenter);
