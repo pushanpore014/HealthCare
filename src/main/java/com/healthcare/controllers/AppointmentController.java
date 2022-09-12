@@ -27,7 +27,7 @@ public class AppointmentController {
 	@Autowired private DiagnosticTestService dtservice;
 	@Autowired private DiagnosticCenterService dcservice;
 	
-	@PostMapping("")
+	@PostMapping
 	public ResponseEntity<?> bookAppointment(@RequestBody AppointmentDTO test) {
 		System.out.println(test);
 		Appointment apt=new Appointment();
@@ -46,7 +46,7 @@ public class AppointmentController {
 		return ResponseEntity.ok(aservice.updateAppointment(appointment));
 	} 
 	
-	@GetMapping("")
+	@GetMapping
 	public ResponseEntity<?> listAll(){
 		return ResponseEntity.ok(aservice.viewAllAppointments());
 	}
