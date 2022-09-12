@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = centerNotFoundException.class)
-    public ResponseEntity<String> handleuserNotFound(Exception e){
+    public ResponseEntity<String> handleUserNotFoundException(Exception e){
         ResponseEntity<String> responseEntity = new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
         return responseEntity;
+
     }
 }
