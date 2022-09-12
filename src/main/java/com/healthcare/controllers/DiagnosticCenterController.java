@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,19 +39,13 @@ public class DiagnosticCenterController {
 		map.put("msg", "Test added successfully");
 		return ResponseEntity.ok(map);
 	}
-
-//	@PatchMapping("/addservices")
-//	public ResponseEntity<?> addServices(@RequestBody DiagnosticCenter center) {
-//		dservice.addDiagnosticCenter(center);
-//		return ResponseEntity.ok(center);
-//	}
 	
 	@GetMapping("test/{testId}")
 	public ResponseEntity<?> getCentersForTest(@PathVariable("testId") int testId) {
 		return ResponseEntity.ok(dservice.getDiagnosticCentersFromTest(testId));
 	}
 	
-	@DeleteMapping("/{centerId}/test/{testId}")
+	@DeleteMapping("test/{centerId}/{testId}")
 	public ResponseEntity<?> deleteTestFromCenter(@PathVariable("centerId") int centerId,@PathVariable("testId") int testId) {
 		dservice.removeTestFromDiagnosticCenter(centerId, tservice.viewById(testId));
 		Map<String,String> map=new HashMap<>();
@@ -60,7 +53,7 @@ public class DiagnosticCenterController {
 		return ResponseEntity.ok(map);
 	}
 	
-	@GetMapping("")
+	@GetMapping
 	public ResponseEntity<?> listAll(){
 		return ResponseEntity.ok(dservice.getAllDiagnosticCenters());
 	}
@@ -78,6 +71,4 @@ public class DiagnosticCenterController {
 		map.put("msg", "Center Deleted successfully");
 		return ResponseEntity.ok(map);
 	}
-
-
 }
